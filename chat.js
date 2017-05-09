@@ -34,7 +34,7 @@ var ChatEngine = function () {
                             alert("correct");
                             sessionStorage.setItem('nick', name);
                             sessionStorage.setItem('pass', pass);
-                            document.getElementById("head").innerHTML += "<h1>Actualy logged user: " + name + "!</h1> <button class=\"ui-btn\" onclick=\"chat.logout()\">logout</button>";
+                            document.getElementById("head").innerHTML += "<h1>Actualy logged user: " + name + "!</h1> <a href=\"#home\" class=\"ui-btn\" onclick=\"chat.logout()\">logout</a>";
                         } else if (ret == "incorrect") {
                             alert("incorrect");
                             history.go(-1);
@@ -48,6 +48,16 @@ var ChatEngine = function () {
                 });
             }
     };
+    
+    this.logout = function (){
+        name = null;
+        pass = null;
+        xhr = "";
+        sevr = "";
+        oldata = "";
+        msg = "";
+        sessionStorage.clear();
+    }
 
     this.playAudio = function (sound) {
           if (window.HTMLAudioElement) {

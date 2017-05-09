@@ -1,17 +1,17 @@
-$( document ).on( "pageinit", "#mainapp", function() {
-    $( document ).on( "swiperight", "#mainapp", function( e ) {
+$(document).on("pageinit", "#mainapp", function () {
+    $(document).on("swiperight", "#mainapp", function (e) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).
         // We do this by checking the data that the framework stores on the page element (panel: open).
-        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
-            if ( e.type === "swiperight"  ) {
-                $( "#left-panel" ).panel( "open" );
-            } 
+        if ($.mobile.activePage.jqmData("panel") !== "open") {
+            if (e.type === "swiperight") {
+                $("#left-panel").panel("open");
+            }
         }
     });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     chat.login();
     chat.init();
     window.location = "#mainapp";
@@ -46,12 +46,17 @@ var ChatEngine = function () {
         if (!name && !pass) {
             alert("Nickname and password must be entered.");
         } else {
-            var jqxhr = $.ajax({
+            var loginpost = $.ajax({
                 url: 'http://homel.vsb.cz/~osm0014/login.php',
                 type: "POST",
                 data: {"nick": name, "pass": pass},
                 success: function (ret) {
                     if (ret === "correct") {
+                        var sendstat = $.ajax({
+                            url: 'http://homel.vsb.cz/~osm0014/login.php',
+                            type: "POST",
+                            data: {"nick": name, "status": "online"}
+                        });
                         localStorage.setItem('nick', name);
                         localStorage.setItem('pass', pass);
                         document.getElementById("user").innerHTML = "User: <br><h3>" + name + "</h3>";
@@ -136,7 +141,7 @@ var ChatEngine = function () {
     this.sendMsg = function () {
         msg = document.getElementById("msg").value;
         document.getElementById("msg").value = "";
-        var newMsg = msg.replace("#kappa", "<img src=\"http://homel.vsb.cz/~osm0014/img/kappa.jpg\" />").replace("#smile","<img src=\"http://homel.vsb.cz/~osm0014/img/smile.jpg\" />").replace("8:)", "<img src=\"http://homel.vsb.cz/~osm0014/png/afro.png\" />").replace(":)", "<img src=\"http://homel.vsb.cz/~osm0014/png/smile.png\" />").replace("#wtf", "<img src=\"http://homel.vsb.cz/~osm0014/img/wtf.jpg\" />").replace(":D", "<img src=\"http://homel.vsb.cz/~osm0014/png/smiling.png\" />");
+        var newMsg = msg.replace("#kappa", "<img src=\"http://homel.vsb.cz/~osm0014/img/kappa.jpg\" />").replace("#smile", "<img src=\"http://homel.vsb.cz/~osm0014/img/smile.jpg\" />").replace("8:)", "<img src=\"http://homel.vsb.cz/~osm0014/png/afro.png\" />").replace(":)", "<img src=\"http://homel.vsb.cz/~osm0014/png/smile.png\" />").replace("#wtf", "<img src=\"http://homel.vsb.cz/~osm0014/img/wtf.jpg\" />").replace(":D", "<img src=\"http://homel.vsb.cz/~osm0014/png/smiling.png\" />");
         msg = newMsg;
 
         document.getElementById("chatZone").innerHTML += '<div class="chatmsg"><b>' + name + '</b>: ' + msg + '<br/></div>';
@@ -160,7 +165,41 @@ var ChatEngine = function () {
                 oldata = e.data;
             }
         };
+    };/*
+    //SSE new online user
+    this.newUserOnline = function () {
+        sevr = new EventSource('http://homel.vsb.cz/~osm0014/server.php');
+        sevr.addEventListener('newUserOnline', function (e) {
+
+        });
     };
-};
+    //SSE user leave
+    this.newUserOnline = function () {
+        sevr = new EventSource('http://homel.vsb.cz/~osm0014/server.php');
+        sevr.addEventListener('userLeave', function (e) {
+            var index, id;
+            sessionStorage.removeItem(id);
+            for (var i = 0; i < sessionStorage.length; i++) {
+                if (!sessionStorage.getItem("myNote" + i)) {
+                    sessionStorage.setItem("myNote" + i, sessionStorage.getItem("myNote" + (i + 1)));
+                    sessionStorage.removeItem("myNote" + (i + 1));
+                }
+            }
+        });
+    };
+}; }*/
 // Createing Object for Chat Engine
 var chat = new ChatEngine();
+/*
+ function removeTodo(id) {
+ var text, index, key, value;
+ index = localStorage.length;
+ localStorage.removeItem(id);
+ for (var i = 0; i < localStorage.length; i++) {
+ if (!localStorage.getItem("myNote" + i)) {
+ localStorage.setItem("myNote" + i, localStorage.getItem("myNote" + (i + 1)));
+ localStorage.removeItem("myNote" + (i + 1));
+ }
+ }
+ showTodo();
+*/

@@ -8,22 +8,6 @@
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="chat.js"></script>
-        <!--
-                          .chatmsg {
-                              background-color: #AAA;
-                              border-radius: 10px;
-                              margin: 5px;
-                              padding: 5px;
-                          }
-                          #chatZone{
-                              overflow-y: scroll;
-                              margin: 0 auto;
-                              text-align: left;
-                              position: fixed;
-                              margin-top: 20%;
-                              bottom: 20%;
-                          }
-        -->
     </head>
     <body style="width: 100%; height: 100%">
         <div data-role="page" id="home" data-dialog="true">
@@ -68,7 +52,7 @@
 
                 <form onsubmit="chat.sendMsg();chat.playAudio('send'); return false;">
                     <input type="text" id="msg" placeholder="Type Your Meassage Here" autocomplete="off"/> 
-                    <input type="submit" id="btn" value="send" onclick="chat.playAudio('send')"/>
+                    <input type="submit" id="btn" value="send"/>
                 </form>
             </div>
         </div>

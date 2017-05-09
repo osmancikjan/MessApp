@@ -28,4 +28,4 @@ for ($index = 0; $index < count($arr); $index++) {
     }
 }
 echo "not exists";
-?>
+

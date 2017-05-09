@@ -7,10 +7,22 @@ header('Cache-Control: no-cache');
 
 $name = $_POST['name'];
 $msg = $_POST['msg'];
+$status = $_POST['status'];
+
+if(!empty($status) && !empty($name)){
+    if($status === "online"){
+        echo "event: newUserOnline" . PHP_EOL;
+        echo "data: $name" . PHP_EOL;
+        flush();
+    } else if ($status === "offline") {
+        echo "event: userLeave" . PHP_EOL;
+        echo "data: $name" . PHP_EOL;
+        flush();
+    }
+}
 
 function sendMsg($msg) {
     echo "data: $msg" . PHP_EOL;
-    ob_flush();
     flush();
 }
 

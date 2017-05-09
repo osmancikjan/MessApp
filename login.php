@@ -1,5 +1,5 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
 $nick = $_POST["nick"];
 $pass = $_POST["pass"];
 

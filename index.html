@@ -39,26 +39,31 @@
         </style>	
     </head>
     <body>
-        <div id="main">
-            <div data-role="page" id="login" >
-                <input type="text" id="nick" placeholder="your nickname" />
-                <input type="password" id="pass" placeholder="password" />
-                <button class="ui-btn" onclick="chat.login()">login</button>
-                <div id="error"></div>
+        <div data-role="page" id="home" >
+            <p>have an account?
+                <a href="#login" data-transition="fade" class="ui-btn" id="signin">sign in</a>
+            </p>
+            <p>don't have an account?
+                <a href="#register" data-transition="fade" class="ui-btn" id="signup">sign up</a>
+            </p>
+        </div>
+        <div data-role="page" id="login" >
+            <input type="text" id="nick" placeholder="your nickname" />
+            <input type="password" id="pass" placeholder="password" />
+            <a href="#mainapp" class="ui-btn" data-transition="fade" onclick="chat.login();chat.init()">login</a>
+            <div id="error"></div>
+        </div>
+        <div data-role="page" id="mainapp"><div data-role="header" id="head">
+
             </div>
-            <div data-role="page" id="mainapp" ><div data-role="header" id="head">
+            <div data-role="main" class="ui-content">                     
+                <div class="chat">
+                    <div id="chatZone">
+                    </div>
 
                 </div>
-                <div data-role="main" class="ui-content">                     
-                    <div class="chat">
-                        <div id="chatZone">
+                <div data-role="footer" id="foot" class="ui-content">
 
-                        </div>
-
-                    </div>
-                    <div data-role="footer" id="foot" class="ui-content">
-
-                    </div>
                     <form onsubmit="chat.sendMsg(); return false;">
                         <input type="text" id="msg" placeholder="Type Your Meassage Here" /> 
                         <input type="submit" value="send" onclick="chat.playAudio('send')"/>

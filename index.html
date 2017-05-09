@@ -3,85 +3,73 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>MessApp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="chat.js"></script>
-        <style type="text/css">
-            body{
-                font-size: large;
-            }
-            .chatmsg {
-                margin: 0 5px;
-            }
-            .chatmsg b{
-                text-transform: uppercase;
-                color: orange;
-            }
-            .chat{
-                height: 100%;
-                margin: 0 auto;
-            }
-            .chat #chatZone{
-                overflow-y: scroll;
-            }
-            #foot {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
-            .chat form {
-                margin: 10px 0 0 0;
-            }
-            #error , #regerror {
-                color: red;
-                text-align: center;
-            }
-            img {
-                height: 2em;
-            }
-
-        </style>	
+        <!--
+                          .chatmsg {
+                              background-color: #AAA;
+                              border-radius: 10px;
+                              margin: 5px;
+                              padding: 5px;
+                          }
+                          #chatZone{
+                              overflow-y: scroll;
+                              margin: 0 auto;
+                              text-align: left;
+                              position: fixed;
+                              margin-top: 20%;
+                              bottom: 20%;
+                          }
+        -->
     </head>
-    <body>
-        <div data-role="page" id="home" >
-            <p>have an account?
+    <body style="width: 100%; height: 100%">
+        <div data-role="page" id="home" data-dialog="true">
+            <div data-role="filedcontain">
+                <h1>MessApp</h1>
+                <h2>Have an account?</h2>
                 <a href="#login" data-transition="fade" class="ui-btn" id="signin">sign in</a>
-            </p>
-            <p>don't have an account?
+                <h2>Don't have an account?</h2>
                 <a href="#register" data-transition="fade" class="ui-btn" id="signup">sign up</a>
-            </p>
-        </div>
-        <div data-role="page" id="login" >
-            <input type="text" id="nick" placeholder="your nickname" />
-            <input type="password" id="pass" placeholder="password" />
-            <a href="#mainapp" class="ui-btn" data-transition="fade" onclick="chat.login();chat.init()">login</a>
-            <div id="error"></div>
-        </div>
-        <div data-role="page" id="register" >
-            <input type="text" id="nickname" placeholder="your nickname" />
-            <input type="password" id="pass1" placeholder="password" />
-            <input type="password" id="pass2" placeholder="password again" />
-            <a href="#login" class="ui-btn" data-transition="fade" onclick="chat.register()">register</a>
-            <div id="regerror"></div>
-        </div>
-        <div data-role="page" id="mainapp"><div data-role="header" id="head">
 
             </div>
-            <div data-role="main" class="ui-content">                     
-                <div class="chat">
-                    <div id="chatZone">
-                    </div>
+        </div>
+        <div data-role="page" id="login" data-dialog="true">
+            <div data-role="filedcontain">
+                <h2>Nickname</h2>
+                <input type="text" id="nick" placeholder="your nickname" />
+                <h2>Password</h2>
+                <input type="password" id="pass" placeholder="password" />
+                <a href="#mainapp" class="ui-btn" data-transition="fade" onclick="chat.login();chat.init()">login</a>
+                <div id="error"></div>
+            </div>
+        </div>
+        <div data-role="page" id="register" data-dialog="true">
+            <div data-role="filedcontain">
+                <h2>Nickname</h2><input type="text" id="nickname" placeholder="your nickname" />
+                <h2>Password</h2><input type="password" id="pass1" placeholder="password" />
+                <h2>Password again</h2><input type="password" id="pass2" placeholder="password again" />
+                <a href="#login" class="ui-btn" data-transition="fade" onclick="chat.register()">register</a>
+                <div id="regerror"></div>
+            </div>
+        </div>
+        <div data-role="page" id="mainapp">
+                <div data-role="panel" id="left-panel" data-theme="b">
+                
+                <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
+                <div id="user"></div>
+                <a href="#home" data-role="button" data-mini="true" data-inline="true" onclick="chat.logout();">logout</a>
+            </div>
+            <div data-role="main" id="chatZone" class="ui-content" style='position: fixed; bottom: 15%; width: 100%; max-height: 85%'>                     
+            </div>
+            <div data-role="footer" id="foot" class="ui-content" style='position: fixed; bottom: 0; width: 100%'>
 
-                </div>
-                <div data-role="footer" id="foot" class="ui-content">
-
-                    <form onsubmit="chat.sendMsg();chat.playAudio('send'); return false;">
-                        <input type="text" id="msg" placeholder="Type Your Meassage Here" /> 
-                        <input type="submit" value="send" onclick="chat.playAudio('send')"/>
-                    </form>
-                </div>
+                <form onsubmit="chat.sendMsg();chat.playAudio('send'); return false;">
+                    <input type="text" id="msg" placeholder="Type Your Meassage Here" autocomplete="off"/> 
+                    <input type="submit" id="btn" value="send" onclick="chat.playAudio('send')"/>
+                </form>
             </div>
         </div>
 

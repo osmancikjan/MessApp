@@ -1,3 +1,21 @@
+$( document ).on( "pageinit", "#mainapp", function() {
+    $( document ).on( "swiperight", "#mainapp", function( e ) {
+        // We check if there is no open panel on the page because otherwise
+        // a swipe to close the left panel would also open the right panel (and v.v.).
+        // We do this by checking the data that the framework stores on the page element (panel: open).
+        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
+            if ( e.type === "swiperight"  ) {
+                $( "#left-panel" ).panel( "open" );
+            } 
+        }
+    });
+});
+
+$(document).ready(function() {
+    chat.login();
+    chat.init();
+    window.location = "#mainapp";
+});
 
 var ChatEngine = function () {
     var name = "";
@@ -16,13 +34,15 @@ var ChatEngine = function () {
     };
     //Setting user name
     this.login = function () {
-        if (sessionStorage.getItem('nick') === null && sessionStorage.getItem('pass') === null) {
+        if (localStorage.getItem('nick') === null && localStorage.getItem('pass') === null) {
             name = document.getElementById("nick").value;
             pass = document.getElementById("pass").value;
         } else {
-            name = sessionStorage.getItem('nick');
-            pass = sessionStorage.getItem('pass');
+            name = localStorage.getItem('nick');
+            pass = localStorage.getItem('pass');
         }
+        document.getElementById("nick").value = "";
+        document.getElementById("pass").value = "";
         if (!name && !pass) {
             alert("Nickname and password must be entered.");
         } else {
@@ -32,12 +52,12 @@ var ChatEngine = function () {
                 data: {"nick": name, "pass": pass},
                 success: function (ret) {
                     if (ret === "correct") {
-                        sessionStorage.setItem('nick', name);
-                        sessionStorage.setItem('pass', pass);
-                        document.getElementById("head").innerHTML += "<h1>Actualy logged user: " + name + "!</h1> <a href=\"#home\" class=\"ui-btn\" onclick=\"chat.logout()\">logout</a>";
+                        localStorage.setItem('nick', name);
+                        localStorage.setItem('pass', pass);
+                        document.getElementById("user").innerHTML = "User: <br><h3>" + name + "</h3>";
                     } else if (ret === "incorrect") {
                         history.go(-1);
-                        document.getElementById("error").innerHTML += "<h2>Incorrect login or password.</h2>";
+                        document.getElementById("error").innerHTML = "<h2>Incorrect login or password.</h2>";
                     } else {
                         history.go(-1);
                         alert("Something went wrong: " + ret);
@@ -50,19 +70,26 @@ var ChatEngine = function () {
     };
 
     this.logout = function () {
-        name = null;
-        pass = null;
+        name = "";
+        pass = "";
         xhr = "";
         sevr = "";
         oldata = "";
         msg = "";
-        sessionStorage.clear();
+        document.getElementById("chatZone").innerHTML = "";
+        document.getElementById("user").innerHTML = "";
+        document.getElementById("error").innerHTML = "";
+        document.getElementById("regerror").innerHTML = "";
+        localStorage.clear();
     };
 
     this.register = function () {
         var nick = document.getElementById("nickname").value;
         var pass1 = document.getElementById("pass1").value;
         var pass2 = document.getElementById("pass2").value;
+        document.getElementById("nickname").value = "";
+        document.getElementById("pass1").value = "";
+        document.getElementById("pass2").value = "";
         if (pass1 === pass2) {
             var jqxhr = $.ajax({
                 url: 'http://homel.vsb.cz/~osm0014/register.php',

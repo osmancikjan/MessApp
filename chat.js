@@ -186,8 +186,8 @@ var ChatEngine = function () {
                 }
             }
         });
-    };
-}; }*/
+    };*/
+}; 
 // Createing Object for Chat Engine
 var chat = new ChatEngine();
 /*

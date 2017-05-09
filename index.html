@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>MessApp</title>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="chat.js"></script>
+        <style type="text/css">
+            .chatmsg {
+                margin: 0 5px;
+            }
+            .chatmsg b{
+                text-transform: uppercase;
+                color: orange;
+            }
+            .chat{
+                height: 100%;
+                margin: 0 auto;
+            }
+            .chat #chatZone{
+                overflow-y: scroll;
+            }
+            #foot {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+            }
+            .chat form{
+                margin: 10px 0 0 0;
+            }
+            #error {
+                color: red;
+                text-align: center;
+            }
+
+        </style>	
+    </head>
+    <body>
+        <div id="main">
+            <div data-role="page" id="login" >
+                <input type="text" id="nick" placeholder="your nickname" />
+                <input type="password" id="pass" placeholder="password" />
+                <button class="ui-btn" onclick="chat.login()">login</button>
+                <div id="error"></div>
+            </div>
+            <div data-role="page" id="mainapp" ><div data-role="header" id="head">
+
+                </div>
+                <div data-role="main" class="ui-content">                     
+                    <div class="chat">
+                        <div id="chatZone">
+
+                        </div>
+
+                    </div>
+                    <div data-role="footer" id="foot" class="ui-content">
+
+                    </div>
+                    <form onsubmit="chat.sendMsg(); return false;">
+                        <input type="text" id="msg" placeholder="Type Your Meassage Here" /> 
+                        <input type="submit" value="send" onclick="chat.playAudio('send')"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -28,10 +28,10 @@
                 left: 0;
                 width: 100%;
             }
-            .chat form{
+            .chat form {
                 margin: 10px 0 0 0;
             }
-            #error {
+            #error , #regerror {
                 color: red;
                 text-align: center;
             }
@@ -52,6 +52,13 @@
             <input type="password" id="pass" placeholder="password" />
             <a href="#mainapp" class="ui-btn" data-transition="fade" onclick="chat.login();chat.init()">login</a>
             <div id="error"></div>
+        </div>
+        <div data-role="page" id="register" >
+            <input type="text" id="nickname" placeholder="your nickname" />
+            <input type="password" id="pass1" placeholder="password" />
+            <input type="password" id="pass2" placeholder="password again" />
+            <a href="#login" class="ui-btn" data-transition="fade" onclick="chat.register()">register</a>
+            <div id="regerror"></div>
         </div>
         <div data-role="page" id="mainapp"><div data-role="header" id="head">
 

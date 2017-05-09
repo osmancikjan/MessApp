@@ -30,17 +30,15 @@ var ChatEngine = function () {
                     type: "POST",
                     data: {"nick": name, "pass": pass},
                     success: function (ret) {
-                        if (ret == "correct") {
-                            alert("correct");
+                        if (ret === "correct") {
                             sessionStorage.setItem('nick', name);
                             sessionStorage.setItem('pass', pass);
                             document.getElementById("head").innerHTML += "<h1>Actualy logged user: " + name + "!</h1> <a href=\"#home\" class=\"ui-btn\" onclick=\"chat.logout()\">logout</a>";
-                        } else if (ret == "incorrect") {
-                            alert("incorrect");
+                        } else if (ret === "incorrect") {
                             history.go(-1);
                             document.getElementById("error").innerHTML += "<h2>Incorrect login or password.</h2>";
                         } else {
-
+                            alert("Something went wrong: " + ret);
                         }
                     }
                 }).fail(function (err) {
@@ -57,8 +55,38 @@ var ChatEngine = function () {
         oldata = "";
         msg = "";
         sessionStorage.clear();
-    }
-
+    };
+    
+    this.register = function (){
+        var nick = document.getElementById("nickname").value;
+        var pass1 = document.getElementById("pass1").value;
+        var pass2 = document.getElementById("pass2").value;
+        if(pass1 === pass2){
+            var jqxhr = $.ajax({
+                    url: 'http://homel.vsb.cz/~osm0014/register.php',
+                    type: "POST",
+                    data: {"nick": nick, "pass": pass1},
+                    success: function (e){
+                        if(e === "success"){
+                            alert("User registered successfully.");
+                        } else if (e === "inlist") {
+                            history.go(-1);
+                            alert("User exists in database choose other nickname.");
+                        } else {
+                            history.go(-1);
+                            alert("Something went wrong: " + e);
+                        }
+                    }
+                }).fail(function (err) {
+                    history.go(-1);
+                    alert("Something went wrong: " + err.responseText);
+                });
+        } else {
+            window.location = "#register";
+            document.getElementById("regerror").innerHTML = "<h2>Incorrect password.</h2>";
+        }
+    };
+    
     this.playAudio = function (sound) {
           if (window.HTMLAudioElement) {
             var snd = new Audio('');

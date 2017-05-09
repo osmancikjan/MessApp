@@ -3,7 +3,6 @@ header('Access-Control-Allow-Origin: *');
 $nick = $_POST["nick"];
 $pass = $_POST["pass"];
 
-$res = "";
 $file = fopen("usrlst.csv", "r");
 $i = 0;
 

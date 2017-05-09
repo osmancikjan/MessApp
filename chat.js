@@ -108,9 +108,9 @@ var ChatEngine = function () {
     //For sending message
     this.sendMsg = function () {
         msg = document.getElementById("msg").value;
-        var newMsg = msg.replace("#kappa", "<img src=\"img/kappa.jpg\" />").replace("#smile","<img src=\"img/smile.jpg\" />").replace(":)", "<img src=\"img/smile.jpg\" />");
+        document.getElementById("msg").value = "";
+        var newMsg = msg.replace("#kappa", "<img src=\"http://homel.vsb.cz/~osm0014/img/kappa.jpg\" />").replace("#smile","<img src=\"http://homel.vsb.cz/~osm0014/img/smile.jpg\" />").replace("8:)", "<img src=\"http://homel.vsb.cz/~osm0014/png/afro.png\" />").replace(":)", "<img src=\"http://homel.vsb.cz/~osm0014/png/smile.png\" />").replace("#wtf", "<img src=\"http://homel.vsb.cz/~osm0014/img/wtf.jpg\" />").replace(":D", "<img src=\"http://homel.vsb.cz/~osm0014/png/smiling.png\" />");
         msg = newMsg;
-        alert("msg: " + msg);
 
         document.getElementById("chatZone").innerHTML += '<div class="chatmsg"><b>' + name + '</b>: ' + msg + '<br/></div>';
         oldata = '<div class="chatmsg"><b>' + name + '</b>: ' + msg + '<br/></div>';

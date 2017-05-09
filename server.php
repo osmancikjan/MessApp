@@ -1,4 +1,5 @@
 <?php
+
 // creating Event stream
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: text/event-stream');

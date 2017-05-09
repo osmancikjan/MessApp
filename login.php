@@ -1,4 +1,5 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 $nick = $_POST["nick"];
 $pass = $_POST["pass"];
@@ -15,13 +16,13 @@ while (!feof($file)) {
 fclose($file);
 
 for ($index = 0; $index < count($arr); $index++) {
-   
+
     $arr[$index][1] = str_replace("\n", "", str_replace("\r", "", $arr[$index][1]));
-   
+
     if ($arr[$index][0] == $nick && $arr[$index][1] == $pass) {
         echo "correct";
         exit;
-    } else if($arr[$index][0] == $nick && $arr[$index][1] != $pass) {
+    } else if ($arr[$index][0] == $nick && $arr[$index][1] != $pass) {
         echo "incorrect";
         exit;
     }

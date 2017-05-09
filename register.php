@@ -1,4 +1,5 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 $nick = $_POST['nick'];
 $pass = $_POST['pass'];
@@ -12,7 +13,7 @@ while (!feof($fr)) {
 }
 fclose($fr);
 
-for ($index = 0; $index < count($arr); $index++) { 
+for ($index = 0; $index < count($arr); $index++) {
     if ($arr[$index][0] == $nick) {
         echo "inlist";
         exit;
@@ -21,7 +22,7 @@ for ($index = 0; $index < count($arr); $index++) {
 
 $ret = file_put_contents("usrlst.csv", $nick . ';' . $pass . PHP_EOL, FILE_APPEND);
 
-if($ret){
+if ($ret) {
     echo "success";
 } else {
     echo "Cannot insert data. Contact administrator.";

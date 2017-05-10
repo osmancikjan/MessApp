@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>MessApp</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <link rel="shortcut icon" href="">
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
         <script type="text/javascript" src="chat.js"></script>
+        <style>
+            body {
+                font-size: x-large;
+            }
+            img {
+                height: 1em;
+            }
+            #login, #register {
+                text-align: center;
+            }
+            .chatmsg {
+                padding: 10px;
+                margin: 10px;
+                display: block;
+                background-color: #36ea2c;
+                border-radius: 10px;
+            }
+        </style>
     </head>
-    <body style="width: 100%; height: 100%">
-        <div data-role="page" id="home" data-dialog="true">
+    <body>
+        <div data-role="page" id="home" data-dialog="true" data-title="MessApp">
             <div data-role="filedcontain">
-                <h1>MessApp</h1>
                 <h2>Have an account?</h2>
                 <a href="#login" data-transition="fade" class="ui-btn" id="signin">sign in</a>
                 <h2>Don't have an account?</h2>
@@ -20,17 +39,18 @@
 
             </div>
         </div>
-        <div data-role="page" id="login" data-dialog="true">
+        <div data-role="page" id="login" class="ui-content" data-dialog="true">
+            
             <div data-role="filedcontain">
-                <h2>Nickname</h2>
+                <label for="nick">Nickname</label>    
                 <input type="text" id="nick" placeholder="your nickname" />
-                <h2>Password</h2>
+                <label for="password">Password</label>  
                 <input type="password" id="pass" placeholder="password" />
-                <a href="#mainapp" class="ui-btn" data-transition="fade" onclick="chat.login();chat.init()">login</a>
+                <button class="ui-btn" onclick="chat.login()">login</button>
                 <div id="error"></div>
             </div>
         </div>
-        <div data-role="page" id="register" data-dialog="true">
+        <div data-role="page" id="register" class="ui-content" data-dialog="true">
             <div data-role="filedcontain">
                 <h2>Nickname</h2><input type="text" id="nickname" placeholder="your nickname" />
                 <h2>Password</h2><input type="password" id="pass1" placeholder="password" />
@@ -41,18 +61,16 @@
         </div>
         <div data-role="page" id="mainapp">
                 <div data-role="panel" id="left-panel" data-theme="b">
-                
-                <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
                 <div id="user"></div>
                 <a href="#home" data-role="button" data-mini="true" data-inline="true" onclick="chat.logout();">logout</a>
             </div>
-            <div data-role="main" id="chatZone" class="ui-content" style='position: fixed; bottom: 15%; width: 100%; max-height: 85%'>                     
+            <div data-role="main" id="chatZone" class="ui-content" style="margin-bottom: 4em">                     
             </div>
-            <div data-role="footer" id="foot" class="ui-content" style='position: fixed; bottom: 0; width: 100%'>
+            <div data-role="footer" style='position: fixed; bottom: 0; height: 4em;width: 100%'>
 
                 <form onsubmit="chat.sendMsg();chat.playAudio('send'); return false;">
                     <input type="text" id="msg" placeholder="Type Your Meassage Here" autocomplete="off"/> 
-                    <input type="submit" id="btn" value="send"/>
+                    
                 </form>
             </div>
         </div>

@@ -1,8 +1,5 @@
 $(document).on("pageinit", "#mainapp", function () {
     $(document).on("swiperight", "#mainapp", function (e) {
-        // We check if there is no open panel on the page because otherwise
-        // a swipe to close the left panel would also open the right panel (and v.v.).
-        // We do this by checking the data that the framework stores on the page element (panel: open).
         if ($.mobile.activePage.jqmData("panel") !== "open") {
             if (e.type === "swiperight") {
                 $("#left-panel").panel("open");
@@ -12,9 +9,10 @@ $(document).on("pageinit", "#mainapp", function () {
 });
 
 $(document).ready(function () {
-    chat.login();
-    chat.init();
-    window.location = "#mainapp";
+    if (localStorage.getItem('nick') && localStorage.getItem('pass')){
+        chat.login();
+    }
+    
 });
 
 var ChatEngine = function () {
@@ -24,7 +22,7 @@ var ChatEngine = function () {
     var oldata = "";
     var sevr = " ";
     var xhr = " ";
-    //initialzation
+    
     this.init = function () {
         if (EventSource) {
             this.initSevr();
@@ -32,18 +30,19 @@ var ChatEngine = function () {
             alert("Use latest Chrome or FireFox");
         }
     };
-    //Setting user name
+    
     this.login = function () {
-        if (localStorage.getItem('nick') === null && localStorage.getItem('pass') === null) {
+        if (!localStorage.getItem('nick') && !localStorage.getItem('pass')) {
             name = document.getElementById("nick").value;
             pass = document.getElementById("pass").value;
         } else {
+            
             name = localStorage.getItem('nick');
             pass = localStorage.getItem('pass');
         }
         document.getElementById("nick").value = "";
         document.getElementById("pass").value = "";
-        if (!name && !pass) {
+        if (name ==="" && pass === "") {
             alert("Nickname and password must be entered.");
         } else {
             var loginpost = $.ajax({
@@ -59,6 +58,8 @@ var ChatEngine = function () {
                         });
                         localStorage.setItem('nick', name);
                         localStorage.setItem('pass', pass);
+                        window.location = "#mainapp";
+                        chat.init();
                         document.getElementById("user").innerHTML = "User: <br><h3>" + name + "</h3>";
                     } else if (ret === "incorrect") {
                         history.go(-1);
@@ -137,7 +138,6 @@ var ChatEngine = function () {
         }
     };
 
-    //For sending message
     this.sendMsg = function () {
         msg = document.getElementById("msg").value;
         document.getElementById("msg").value = "";
@@ -155,8 +155,7 @@ var ChatEngine = function () {
         });
         return false;
     };
-    //sending message to server
-    //HTML5 SSE(Server Sent Event) initilization
+    
     this.initSevr = function () {
         sevr = new EventSource('http://homel.vsb.cz/~osm0014/server.php');
         sevr.onmessage = function (e) {
@@ -165,41 +164,7 @@ var ChatEngine = function () {
                 oldata = e.data;
             }
         };
-    };/*
-    //SSE new online user
-    this.newUserOnline = function () {
-        sevr = new EventSource('http://homel.vsb.cz/~osm0014/server.php');
-        sevr.addEventListener('newUserOnline', function (e) {
-
-        });
     };
-    //SSE user leave
-    this.newUserOnline = function () {
-        sevr = new EventSource('http://homel.vsb.cz/~osm0014/server.php');
-        sevr.addEventListener('userLeave', function (e) {
-            var index, id;
-            sessionStorage.removeItem(id);
-            for (var i = 0; i < sessionStorage.length; i++) {
-                if (!sessionStorage.getItem("myNote" + i)) {
-                    sessionStorage.setItem("myNote" + i, sessionStorage.getItem("myNote" + (i + 1)));
-                    sessionStorage.removeItem("myNote" + (i + 1));
-                }
-            }
-        });
-    };*/
 }; 
-// Createing Object for Chat Engine
+
 var chat = new ChatEngine();
-/*
- function removeTodo(id) {
- var text, index, key, value;
- index = localStorage.length;
- localStorage.removeItem(id);
- for (var i = 0; i < localStorage.length; i++) {
- if (!localStorage.getItem("myNote" + i)) {
- localStorage.setItem("myNote" + i, localStorage.getItem("myNote" + (i + 1)));
- localStorage.removeItem("myNote" + (i + 1));
- }
- }
- showTodo();
-*/
